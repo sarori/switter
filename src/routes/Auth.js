@@ -15,12 +15,12 @@ const Auth = () => {
     return (
         <>
         <div>
-            <input type="email" value={email} placeholder="Enter your email" />
-            <input type="password" value={password}/>
+            <input type="email" name="email" placeholder="Enter your email" />
+            <input type="password" name="password" value={...name}/>
             <button type="submit" onClick={onSubmit}>
                 CreateAccount
             </button>
-            {/* console.log(email, password); */}
+            {/* console.log(name.value); */}
             <div>
                 Sign In
             </div>

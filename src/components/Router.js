@@ -7,7 +7,6 @@ import fbase from "../fbase";
 
 const AppRouter = () =>  {
     const [IsLogged, setIsLogged] = useState(false);
-    
     return (
         <Router>
             <Switch>
