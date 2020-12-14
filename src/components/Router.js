@@ -2,15 +2,14 @@ import React, {useState} from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from '../routes/Home';
 import Auth from "../routes/Auth";
-import fbase from "../fbase";
 
 
 const AppRouter = () =>  {
-    const [IsLogged, setIsLogged] = useState(false);
+    const [isLogged, setIsLogged] = useState(false);
     return (
         <Router>
             <Switch>
-                {IsLogged ? (
+                {isLogged ? (
                     <>
                         <Route path="/" exact>
                             <Home />

@@ -1,26 +1,33 @@
-import React from "react";
-// import firebase from "firebase";
-import fbase from "../fbase";
-
-// import "firebase/auth";
-
-const auth = fbase.auth();
-// auth.createUserWithEmailAndPassword(email, pass);
-console.log("auth is   ", auth);
+import React, {useState} from "react";
 
 const Auth = () => {
-    const onSubmit = (e) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const onClick = (e) => {
         e.preventDefault();
+        // console.log(e.target.innerText);
+        // return e.target.innerText;
+        toggleAccount(e.target.innerText);
+    };
+    const onChangeEmail = (e) => {
+        setEmail(e.target.value);
+        console.log(e.target.value);
+    };
+    const onChangePassword = (e) => {
+        setPassword(e.target.value);
+    };
+    const toggleAccount = (name) => {
+        const value = name === "CreateAccount" ? "Sign In" : name;
+        return name;
     }
     return (
         <>
         <div>
-            <input type="email" name="email" placeholder="Enter your email" />
-            <input type="password" name="password" value={...name}/>
-            <button type="submit" onClick={onSubmit}>
+            <input type="email" value={email} onChange={onChangeEmail} placeholder="Enter your email" />
+            <input type="password" value={password} onChange={onChangePassword} name="password" />
+            <button type="submit" onClick={onClick}>
                 CreateAccount
             </button>
-            {/* console.log(name.value); */}
             <div>
                 Sign In
             </div>
