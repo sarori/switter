@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import AppRouter from "./Router";
+import {AuthService} from "../fbase";
 
 
 const App = () => {
-  
-  return <AppRouter />;
+  const [isLogged, setIsLogged] = useState(AuthService.currentUser);
+  return <AppRouter isLogged={isLogged} />;
 }
 
 export default App;
