@@ -5,13 +5,10 @@ const Auth = () => {
     const [password, setPassword] = useState("");
     const onClick = (e) => {
         e.preventDefault();
-        // console.log(e.target.innerText);
-        // return e.target.innerText;
         toggleAccount(e.target.innerText);
     };
     const onChangeEmail = (e) => {
         setEmail(e.target.value);
-        console.log(e.target.value);
     };
     const onChangePassword = (e) => {
         setPassword(e.target.value);
@@ -32,7 +29,6 @@ const Auth = () => {
                 Sign In
             </div>
         </div>
-        
         <div>
             <button type="button">Continue with Google</button>
         </div>
