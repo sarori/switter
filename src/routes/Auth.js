@@ -3,36 +3,37 @@ import React, {useState} from "react";
 const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const onClick = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        toggleAccount(e.target.innerText);
+        // toggleAccount(e.target.innerText);
     };
-    const onChangeEmail = (e) => {
-        setEmail(e.target.value);
+    const onChange = (e) => {
+        const  { target : {name, value}} = e;
+        if (name === "email") {
+            setEmail(value);
+        } else if (name === "password"){
+            setPassword(value);
+        }
     };
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-    const toggleAccount = (name) => {
-        const value = name === "CreateAccount" ? "Sign In" : name;
-        return name;
-    }
+    // const toggleAccount = (name) => {
+    //     const value = name === "CreateAccount" ? "Sign In" : name;
+    //     return name;
+    // };
     return (
         <>
-        <div>
-            <input type="email" value={email} onChange={onChangeEmail} placeholder="Enter your email" />
-            <input type="password" value={password} onChange={onChangePassword} name="password" />
-            <button type="submit" onClick={onClick}>
+        <form onSubmit={onSubmit}>
+            <input type="text" name="email" value={email} onChange={onChange} placeholder="Enter your email" required />
+            <input type="password" name="password" value={password} onChange={onChange} required />
+            <button type="submit" value="Log In" >
                 CreateAccount
             </button>
             <div>
                 Sign In
             </div>
-        </div>
+        </form>
         <div>
             <button type="button">Continue with Google</button>
         </div>
-            
         </>
     );
 };
