@@ -6,7 +6,6 @@ const Auth = () => {
     const [password, setPassword] = useState("");
     const onSubmit = (e) => {
         e.preventDefault();
-        // toggleAccount(e.target.innerText);
     };
     const onChange = (e) => {
         const  { target : {name, value}} = e;
