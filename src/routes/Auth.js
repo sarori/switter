@@ -25,7 +25,6 @@ const Auth = () => {
             console.log("Sign in");
         })
         .catch((error) => {
-            var errorCode = error.code;
             var errorMessage = error.message;
             alert(errorMessage);
         });
@@ -38,7 +37,6 @@ const Auth = () => {
             console.log("login");
         })
         .catch((error) => {
-            var errorCode = error.code;
             var errorMessage = error.message;
         });
     };
