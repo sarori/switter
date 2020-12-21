@@ -47,7 +47,8 @@ const Auth = () => {
             <input type="password" name="password" value={password} onChange={onChange} required />
             <input type="submit"  onClick={onSubmit} value={newAccount ?  "Create Account" : "Log In"} />
         </form>
-        <div>
+        <div onSubmit={onSubmit}>
+            <input type="submit" value={newAccount ?  "LogIn" : "CreateAccount"} />
             <button type="button">Continue with Google</button>
         </div>
         </div>

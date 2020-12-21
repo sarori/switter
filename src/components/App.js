@@ -4,9 +4,17 @@ import {AuthService} from "../fbase";
 
 
 const App = () => {
-  const [isLogged, setIsLogged] = useState(AuthService.currentUser);
-  console.log(AuthService.currentUser);
-  return <AppRouter isLogged={isLogged} />;
+  const [init, setInit] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
+  AuthService.onAuthStateChanged((user) => {
+    if (user) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
+    setInit(true);
+  });
+  return (init ? <AppRouter isLogged={isLogged} /> : "Initializing...");
 }
 
 export default App;

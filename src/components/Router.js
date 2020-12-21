@@ -5,7 +5,6 @@ import Auth from "../routes/Auth";
 
 
 const AppRouter = ({isLogged}) =>  {
-    console.log(isLogged);
     return (
         <Router>
             <Switch>
