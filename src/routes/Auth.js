@@ -39,16 +39,12 @@ const Auth = () => {
         try{
             if (name === "google") {
                 const provider = new firebaseInstance.auth.GoogleAuthProvider();
-                const result = await AuthService.signInWithPopup(provider);
-                console.log(result);
+                await AuthService.signInWithPopup(provider);
             }
         } catch (error) {
             setError(error.message);
         }
-        
-        
     }
-   
     return (
         <div>
         <form onSubmit={onSubmit}>
