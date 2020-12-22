@@ -5,6 +5,7 @@ const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [newAccount, setAccount] = useState(true);
+    const [error, setError] = useState("");
     const onChange = (e) => {
         const  { target : {name, value}} = e;
         if (name === "email") {
@@ -13,32 +14,25 @@ const Auth = () => {
             setPassword(value);
         }
     };
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        if (newAccount){
-            AuthService.createUserWithEmailAndPassword(email, password)
-            .then((user) => {
+        try{
+            let data;
+            if (newAccount) {
+                data = await AuthService.createUserWithEmailAndPassword(email, password);
                 console.log("Sign in");
                 setAccount(false);
-            })
-            .catch((error) => {
-                var errorMessage = error.message;
-                alert(errorMessage);
-            });
-        }
-        else {
-            AuthService.signInWithEmailAndPassword(email, password)
-            .then((user) => {
-                // Signed in
-                // ...
-                console.log("login");
-            })
-            .catch((error) => {
-                var errorMessage = error.message;
-            });
-        }
+            } else {
+                data = await AuthService.signInWithEmailAndPassword(email, password);
+                    console.log("Log in");
+            } 
+        } catch(error) {
+                setError(error.message);
+            }        
     };
-  
+    const toggleAccount = () => {
+        setAccount((prev) => !prev);
+    }
    
     return (
         <div>
@@ -47,8 +41,9 @@ const Auth = () => {
             <input type="password" name="password" value={password} onChange={onChange} required />
             <input type="submit"  onClick={onSubmit} value={newAccount ?  "Create Account" : "Log In"} />
         </form>
-        <div onSubmit={onSubmit}>
-            <input type="submit" value={newAccount ?  "LogIn" : "CreateAccount"} />
+        {error}
+        <div>
+            <span onClick={toggleAccount}>{newAccount ? "Log In" : "Create Account"} </span>
             <button type="button">Continue with Google</button>
         </div>
         </div>
