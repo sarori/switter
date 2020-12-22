@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {AuthService} from "../fbase";
+import {firebaseInstance} from "../fbase";
 
 const Auth = () => {
     const [email, setEmail] = useState("");
@@ -33,6 +34,20 @@ const Auth = () => {
     const toggleAccount = () => {
         setAccount((prev) => !prev);
     }
+    const onSocialClick = async (e) => {
+        const {target : {name}} = e;
+        try{
+            if (name === "google") {
+                const provider = new firebaseInstance.auth.GoogleAuthProvider();
+                const result = await AuthService.signInWithPopup(provider);
+                console.log(result);
+            }
+        } catch (error) {
+            setError(error.message);
+        }
+        
+        
+    }
    
     return (
         <div>
@@ -44,7 +59,7 @@ const Auth = () => {
         {error}
         <div>
             <span onClick={toggleAccount}>{newAccount ? "Log In" : "Create Account"} </span>
-            <button type="button">Continue with Google</button>
+            <button type="button" name="google" onClick={onSocialClick}>Continue with Google</button>
         </div>
         </div>
     );

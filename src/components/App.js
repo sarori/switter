@@ -16,7 +16,12 @@ const App = () => {
       setInit(true);
     });
   }, []);
-  return (init ? <AppRouter isLogged={isLogged} /> : "Initializing...");
+  return (
+    <>
+      {init ? <AppRouter isLogged={isLogged} /> : "Initializing..."}
+      <footer> &copy; {new Date().getFullYear()} Twitter</footer>
+    </>
+    );
 }
 
 export default App;
