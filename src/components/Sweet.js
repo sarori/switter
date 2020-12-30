@@ -1,25 +1,26 @@
 import React from "react"
 
 const Sweet = ({ sweets }) => {
-	const onSubmit = (event) => {
+	const onClick = (event) => {
 		const {
 			target: { name },
 		} = event
-		console.log(name)
 		if (name === "update") {
 			//update
 		} else if (name === "delete") {
-			console.log("a")
-			window.alert("Do you wanna update?")
+			const ok = window.confirm("Do you wanna update?")
+			if (ok) {
+				// delete
+			}
 		}
 	}
 	return (
 		<>
 			<div>
-				<button name="update" onSubmit={onSubmit}>
+				<button type="button" name="update" onClick={onClick}>
 					update
 				</button>
-				<button name="delete" onSubmit={onSubmit}>
+				<button type="button" name="delete" onClick={onClick}>
 					delete
 				</button>
 			</div>

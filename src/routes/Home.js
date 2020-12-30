@@ -32,6 +32,7 @@ const Home = () => {
 		} = event
 		setSweet(value)
 	}
+	console.log(sweet)
 	return (
 		<>
 			<h3>Nweeting</h3>
@@ -52,7 +53,7 @@ const Home = () => {
 					</div>
 				))}
 			</div>
-			<Sweet sweet={sweet} />
+			<Sweet sweets={sweets} />
 		</>
 	)
 }
