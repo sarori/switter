@@ -2,27 +2,24 @@ import React, { useState, useEffect } from "react"
 import { dbService } from "../fbase"
 import Sweet from "../components/Sweet"
 
-const Home = () => {
+const Home = ({ userObj }) => {
 	const [sweet, setSweet] = useState("")
 	const [sweets, setSweets] = useState([])
-	const getSweet = async () => {
-		const dbSweet = await dbService.collection("sweets").get()
-		dbSweet.forEach((document) => {
-			const sweetObject = {
-				...document.data(),
-				id: document.id,
-			}
-			setSweets((prev) => [sweetObject, ...prev])
-		})
-	}
 	useEffect(() => {
-		getSweet()
+		dbService.collection("nweets").onSnapshot((snapshot) => {
+			const sweetArray = snapshot.docs.map((doc) => ({
+				id: doc.id,
+				...doc.data(),
+			}))
+			setSweets(sweetArray)
+		})
 	}, [])
 	const onSubmit = async (event) => {
 		event.preventDefault()
-		const user = await dbService.collection("sweets").add({
-			sweet,
+		await dbService.collection("sweets").add({
+			text: sweet,
 			createdAt: Date.now(),
+			creatorId: userObj.uid,
 		})
 		setSweet("")
 	}
@@ -32,9 +29,8 @@ const Home = () => {
 		} = event
 		setSweet(value)
 	}
-	console.log(sweet)
 	return (
-		<>
+		<div>
 			<h3>Nweeting</h3>
 			<form onSubmit={onSubmit}>
 				<input
@@ -49,12 +45,11 @@ const Home = () => {
 			<div>
 				{sweets.map((sweet) => (
 					<div key={sweet.id}>
-						<h4>{sweet.sweet}</h4>
+						<h3>{sweet.text}</h3>
 					</div>
 				))}
 			</div>
-			<Sweet sweets={sweets} />
-		</>
+		</div>
 	)
 }
 
