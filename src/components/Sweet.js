@@ -1,6 +1,6 @@
 import React from "react"
 
-const Sweet = ({ sweets }) => {
+const Sweet = ({ isOwner, sweetObj }) => {
 	const onClick = (event) => {
 		const {
 			target: { name },
@@ -16,6 +16,9 @@ const Sweet = ({ sweets }) => {
 	}
 	return (
 		<>
+			<div key={sweetObj.id}>
+				<h3>{sweetObj.text}</h3>
+			</div>
 			<div>
 				<button type="button" name="update" onClick={onClick}>
 					update

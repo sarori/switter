@@ -6,8 +6,7 @@ const Home = ({ userObj }) => {
 	const [sweet, setSweet] = useState("")
 	const [sweets, setSweets] = useState([])
 	useEffect(() => {
-		dbService.collection("nweets").onSnapshot((snapshot) => {
-			console.log(snapshot.docs)
+		dbService.collection("sweets").onSnapshot((snapshot) => {
 			const sweetArray = snapshot.docs.map((doc) => ({
 				id: doc.id,
 				...doc.data(),
@@ -45,9 +44,11 @@ const Home = ({ userObj }) => {
 			</form>
 			<div>
 				{sweets.map((sweet) => (
-					<div key={sweet.id}>
-						<h3>{sweet.text}</h3>
-					</div>
+					<Sweet
+						key={sweet.id}
+						sweetObj={sweet}
+						isOwner={sweet.createId === userObj.uid}
+					/>
 				))}
 			</div>
 		</div>
