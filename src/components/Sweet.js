@@ -1,41 +1,63 @@
-import React from "react"
+import React, { useState } from "react"
 import { dbService } from "../fbase"
 
 const Sweet = ({ isOwner, sweetObj }) => {
-	const onClick = async (event) => {
-		const {
-			target: { name },
-		} = event
-		if (name === "update") {
-			//update
-		} else if (name === "delete") {
-			const ok = window.confirm("Do you wanna delete?")
-			if (ok) {
-				await dbService.doc(`sweets/${sweetObj.id}`).delete()
-			}
+	const [editing, setEditing] = useState(false)
+	const [newSwitter, setNewSwitter] = useState(sweetObj.text)
+	const onDeleteClick = async (event) => {
+		const ok = window.confirm("Do you wanna delete?")
+		if (ok) {
+			await dbService.doc(`sweets/${sweetObj.id}`).delete()
 		}
 	}
+	const onSubmit = async (event) => {
+		event.preventDefault()
+		const updateData = await dbService.doc(`sweets/${sweetObj.id}`)
+		updateData.update({
+			text: newSwitter,
+		})
+		toToggle(editing)
+	}
+	const toToggle = () => {
+		setEditing((prev) => !prev)
+	}
+	const onChange = (event) => {
+		const {
+			target: { value },
+		} = event
+		setNewSwitter(value)
+	}
+
 	return (
 		<>
-			{isOwner ? (
+			<div key={sweetObj.id}>
+				<h4>{sweetObj.text}</h4>
+			</div>
+			{editing ? (
 				<>
-					<div key={sweetObj.id}>
-						<h4>{sweetObj.text}</h4>
-					</div>
-					<div>
-						<button type="button" name="update" onClick={onClick}>
-							update
-						</button>
-						<button type="button" name="delete" onClick={onClick}>
-							delete
-						</button>
-					</div>
+					<form onSubmit={onSubmit}>
+						<input
+							type="text"
+							placeholder="Edit your sweet!"
+							value={newSwitter}
+							onChange={onChange}
+						/>
+						<button>Edit</button>
+					</form>
+					<button onClick={toToggle}>Cancel</button>
 				</>
 			) : (
 				<>
-					<div key={sweetObj.id}>
-						<h4>{sweetObj.text}</h4>
-					</div>
+					{isOwner && (
+						<div>
+							<button name="update" onClick={toToggle}>
+								update
+							</button>
+							<button name="delete" onClick={onDeleteClick}>
+								delete
+							</button>
+						</div>
+					)}
 				</>
 			)}
 		</>
