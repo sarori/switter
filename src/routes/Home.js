@@ -40,14 +40,14 @@ const Home = ({ userObj }) => {
 					placeholder="Share your day"
 					max={150}
 				/>
-				<input type="submit" value="submit" />
+				<input type="submit" value="Sweet" />
 			</form>
 			<div>
 				{sweets.map((sweet) => (
 					<Sweet
 						key={sweet.id}
 						sweetObj={sweet}
-						isOwner={sweet.createId === userObj.uid}
+						isOwner={sweet.creatorId === userObj.uid}
 					/>
 				))}
 			</div>

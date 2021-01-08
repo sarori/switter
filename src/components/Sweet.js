@@ -1,32 +1,43 @@
 import React from "react"
+import { dbService } from "../fbase"
 
 const Sweet = ({ isOwner, sweetObj }) => {
-	const onClick = (event) => {
+	const onClick = async (event) => {
 		const {
 			target: { name },
 		} = event
 		if (name === "update") {
 			//update
 		} else if (name === "delete") {
-			const ok = window.confirm("Do you wanna update?")
+			const ok = window.confirm("Do you wanna delete?")
 			if (ok) {
-				// delete
+				await dbService.doc(`sweets/${sweetObj.id}`).delete()
 			}
 		}
 	}
 	return (
 		<>
-			<div key={sweetObj.id}>
-				<h3>{sweetObj.text}</h3>
-			</div>
-			<div>
-				<button type="button" name="update" onClick={onClick}>
-					update
-				</button>
-				<button type="button" name="delete" onClick={onClick}>
-					delete
-				</button>
-			</div>
+			{isOwner ? (
+				<>
+					<div key={sweetObj.id}>
+						<h4>{sweetObj.text}</h4>
+					</div>
+					<div>
+						<button type="button" name="update" onClick={onClick}>
+							update
+						</button>
+						<button type="button" name="delete" onClick={onClick}>
+							delete
+						</button>
+					</div>
+				</>
+			) : (
+				<>
+					<div key={sweetObj.id}>
+						<h4>{sweetObj.text}</h4>
+					</div>
+				</>
+			)}
 		</>
 	)
 }
