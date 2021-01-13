@@ -1,6 +1,7 @@
 import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/firestore"
+import "firebase/storage"
 
 const firebaseConfig = {
 	apiKey: "AIzaSyC3ZyNykZpVT9KjPlPVzMf8wjDKdvvzyLI",
@@ -20,3 +21,6 @@ export const firebaseInstance = firebase
 export const AuthService = firebase.auth()
 
 export const dbService = firebase.firestore()
+
+export const storageService = firebase.storage()
+// Get a reference to the storage service, which is used to create references in your storage bucket
