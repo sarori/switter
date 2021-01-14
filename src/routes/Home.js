@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { dbService, storageService } from "../fbase"
 import Sweet from "../components/Sweet"
+import { v4 as uuidv4 } from "uuid"
 
 const Home = ({ userObj }) => {
 	const [sweet, setSweet] = useState("")
@@ -17,12 +18,17 @@ const Home = ({ userObj }) => {
 	}, [])
 	const onSubmit = async (event) => {
 		event.preventDefault()
-		await dbService.collection("sweets").add({
-			text: sweet,
-			createdAt: Date.now(),
-			creatorId: userObj.uid,
-		})
-		setSweet("")
+
+		const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`)
+		const response = await fileRef.putString(attachment, "data_url")
+		console.log(response)
+		// await dbService.collection("sweets").add({
+		// 	text: sweet,
+		// 	createdAt: Date.now(),
+		// 	creatorId: userObj.uid,
+
+		// })
+		// setSweet("")
 	}
 	const onChange = (event) => {
 		const {
@@ -37,9 +43,15 @@ const Home = ({ userObj }) => {
 		const theFile = files[0]
 		const reader = new FileReader()
 		reader.onloadend = (finishedEvent) => {
-			console.log(finishedEvent)
+			const {
+				currentTarget: { result },
+			} = finishedEvent
+			setAttachment(result)
 		}
 		reader.readAsDataURL(theFile)
+	}
+	const onClearAttachment = () => {
+		setAttachment(null)
 	}
 	return (
 		<div>
@@ -54,6 +66,12 @@ const Home = ({ userObj }) => {
 				/>
 				<input type="file" accept="image/*" onChange={onAttachmentClick} />
 				<input type="submit" value="Sweet" />
+				{attachment && (
+					<div>
+						<img src={attachment} width="50px" height="50px" />
+						<button onClick={onClearAttachment}>Clear</button>
+					</div>
+				)}
 			</form>
 			<div>
 				{sweets.map((sweet) => (
