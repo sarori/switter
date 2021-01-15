@@ -22,13 +22,13 @@ const Home = ({ userObj }) => {
 		const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`)
 		const response = await fileRef.putString(attachment, "data_url")
 		console.log(response)
-		// await dbService.collection("sweets").add({
-		// 	text: sweet,
-		// 	createdAt: Date.now(),
-		// 	creatorId: userObj.uid,
-
-		// })
-		// setSweet("")
+		await dbService.collection("sweets").add({
+			text: sweet,
+			createdAt: Date.now(),
+			creatorId: userObj.uid,
+			attachment: attachment,
+		})
+		setSweet("")
 	}
 	const onChange = (event) => {
 		const {
