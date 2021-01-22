@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react"
 
-const EditProfile = () => <span>EditProfile</span>;
+const EditProfile = () => <span>EditProfile</span>
 
-export default EditProfile;
+export default EditProfile
