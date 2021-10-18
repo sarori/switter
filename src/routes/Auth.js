@@ -1,84 +1,98 @@
 import React, { useState } from "react"
-import { AuthService } from "../fbase"
-import { firebaseInstance } from "../fbase"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTwitter, faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons"
+import { AuthService, firebaseInstance } from "../fbase"
 
 const Auth = () => {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
-	const [newAccount, setAccount] = useState(true)
+	const [newAccount, setNewAccount] = useState(true)
 	const [error, setError] = useState("")
-	const onChange = (e) => {
+
+	const toggleAccount = () => setNewAccount((prev) => !prev)
+	const onChange = (event) => {
 		const {
 			target: { name, value },
-		} = e
+		} = event
 		if (name === "email") {
 			setEmail(value)
 		} else if (name === "password") {
 			setPassword(value)
 		}
 	}
-	const onSubmit = async (e) => {
-		e.preventDefault()
+	const onSubmit = async (event) => {
+		event.preventDefault()
 		try {
 			let data
 			if (newAccount) {
 				data = await AuthService.createUserWithEmailAndPassword(email, password)
-				console.log("Sign in")
-				setAccount(false)
 			} else {
 				data = await AuthService.signInWithEmailAndPassword(email, password)
-				console.log("Log in")
 			}
 		} catch (error) {
 			setError(error.message)
 		}
 	}
-	const toggleAccount = () => {
-		setAccount((prev) => !prev)
-	}
-	const onSocialClick = async (e) => {
+	const onSocialClick = async (event) => {
 		const {
 			target: { name },
-		} = e
-		try {
-			if (name === "google") {
-				const provider = new firebaseInstance.auth.GoogleAuthProvider()
-				await AuthService.signInWithPopup(provider)
-			}
-		} catch (error) {
-			setError(error.message)
+		} = event
+		let provider
+		if (name === "google") {
+			provider = new firebaseInstance.auth.GoogleAuthProvider()
+		} else if (name === "github") {
+			provider = new firebaseInstance.auth.GithubAuthProvider()
 		}
+		const data = await AuthService.signInWithPopup(provider)
 	}
 	return (
-		<div>
-			<form onSubmit={onSubmit}>
-				<input
-					type="email"
-					name="email"
-					value={email}
-					onChange={onChange}
-					placeholder="Enter your email"
-					required
-				/>
-				<input
-					type="password"
-					name="password"
-					value={password}
-					onChange={onChange}
-					required
-				/>
-				<input
-					type="submit"
-					onClick={onSubmit}
-					value={newAccount ? "Create Account" : "Log In"}
-				/>
-			</form>
-			{error}
+		<div className="authContainer">
+			<FontAwesomeIcon
+				icon={faTwitter}
+				color={"#04AAFF"}
+				size="3x"
+				style={{ marginBottom: 30 }}
+			/>
 			<div>
-				<span onClick={toggleAccount}>{newAccount ? "Log In" : "Create Account"} </span>
-				<button type="button" name="google" onClick={onSocialClick}>
-					Continue with Google
-				</button>
+				<form onSubmit={onSubmit} className="container">
+					<input
+						name="email"
+						type="email"
+						placeholder="Email"
+						required
+						value={email}
+						onChange={onChange}
+						className="authInput"
+					/>
+					<input
+						name="password"
+						type="password"
+						placeholder="Password"
+						required
+						value={password}
+						onChange={onChange}
+						className="authInput"
+					/>
+					<input
+						type="submit"
+						value={newAccount ? "Create Account" : "Log In"}
+						onClick={onSubmit}
+						className="authSubmit"
+					/>
+					{error && <span className="authError">{error}</span>}
+				</form>
+				<span onClick={toggleAccount} className="authSwitch">
+					{newAccount ? "Sign in" : "Create Account"}
+				</span>
+
+				<div className="authBtns">
+					<button onClick={onSocialClick} name="google" className="authBtn">
+						Continue with Google <FontAwesomeIcon icon={faGoogle} />
+					</button>
+					<button onClick={onSocialClick} name="github" className="authBtn">
+						Continue with Github <FontAwesomeIcon icon={faGithub} />
+					</button>
+				</div>
 			</div>
 		</div>
 	)
