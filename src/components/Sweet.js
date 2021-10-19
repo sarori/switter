@@ -30,36 +30,7 @@ const Sweet = ({ isOwner, sweetObj }) => {
 
 	return (
 		<>
-			<div key={sweetObj.id}>
-				<h4>{sweetObj.text}</h4>
-			</div>
-			{editing ? (
-				<>
-					<form onSubmit={onSubmit}>
-						<input
-							type="text"
-							placeholder="Edit your sweet!"
-							value={newSwitter}
-							onChange={onChange}
-						/>
-						<button>Edit</button>
-					</form>
-					<button onClick={toToggle}>Cancel</button>
-				</>
-			) : (
-				<>
-					{isOwner && (
-						<div>
-							<button name="update" onClick={toToggle}>
-								update
-							</button>
-							<button name="delete" onClick={onDeleteClick}>
-								delete
-							</button>
-						</div>
-					)}
-				</>
-			)}
+			<div>{editing ? <>{/* //취소 완료 */}</> : <>{/* edit, 삭제 */}</>}</div>
 		</>
 	)
 }
