@@ -1,9 +1,11 @@
+import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React, { useState } from "react"
 import { dbService } from "../fbase"
 
 const Sweet = ({ isOwner, sweetObj }) => {
 	const [editing, setEditing] = useState(false)
-	const [newSwitter, setNewSwitter] = useState(sweetObj.text)
+	const [newSweet, setNewSweet] = useState(sweetObj.text)
 	const onDeleteClick = async (event) => {
 		const ok = window.confirm("Do you wanna delete?")
 		if (ok) {
@@ -14,7 +16,7 @@ const Sweet = ({ isOwner, sweetObj }) => {
 		event.preventDefault()
 		const updateData = await dbService.doc(`sweets/${sweetObj.id}`)
 		updateData.update({
-			text: newSwitter,
+			text: newSweet,
 		})
 		toToggle(editing)
 	}
@@ -25,12 +27,46 @@ const Sweet = ({ isOwner, sweetObj }) => {
 		const {
 			target: { value },
 		} = event
-		setNewSwitter(value)
+		setNewSweet(value)
 	}
 
 	return (
 		<>
-			<div>{editing ? <>{/* //취소 완료 */}</> : <>{/* edit, 삭제 */}</>}</div>
+			<div>
+				{editing ? (
+					<>
+						<form onSubmit={onSubmit} className="container nweetEdit">
+							<input
+								type="text"
+								value={newSweet}
+								required
+								autoFocus
+								onChange={onChange}
+								className="formInput"
+							/>
+						</form>
+						<span onClick={onSubmit} className="formBtn">
+							Update
+						</span>
+						<span onClick={toToggle}>Cancle</span>
+					</>
+				) : (
+					<>
+						<h4>{sweetObj.text}</h4>
+						{sweetObj.attachmentUrl && <img src={sweetObj.attachmentUrl} />}
+						{isOwner && (
+							<div class="nweet__actions">
+								<span onClick={toToggle}>
+									<FontAwesomeIcon icon={faPencilAlt} />
+								</span>
+								<span onClick={onDeleteClick}>
+									<FontAwesomeIcon icon={faTrash} />
+								</span>
+							</div>
+						)}
+					</>
+				)}
+			</div>
 		</>
 	)
 }
