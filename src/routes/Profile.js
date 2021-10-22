@@ -5,9 +5,10 @@ import { AuthService } from "../fbase"
 const Profile = ({ userObj, refreshUser }) => {
 	const history = useHistory()
 	const [newDisplayName, setNewDisplayName] = useState(userObj.displayName)
-	const signOut = () => {
-		AuthService.signOut()
+	const signOut = async () => {
+		await AuthService.signOut()
 		history.push("/")
+		window.location.reload()
 	}
 	const onChange = (event) => {
 		const {
@@ -24,6 +25,7 @@ const Profile = ({ userObj, refreshUser }) => {
 			refreshUser()
 		}
 	}
+
 	return (
 		<div className="container">
 			<form onSubmit={onSubmit} className="profileForm">

@@ -63,6 +63,8 @@ form {
 	border-radius: 20px;
 	background-color: #04aaff;
 	cursor: pointer;
+	margin-bottom: 1px;
+	margin-top: 10px;
 }
 
 .cancelBtn {
@@ -182,16 +184,27 @@ form {
 
 .nweet h4 {
 	font-size: 14px;
+	width: 260px;
+	word-wrap: break-word;
+	line-height: 1.5;
+	margin-top: 15px;
 }
 
 .nweet img {
-	right: -10px;
+	width: 250px;
+	height: 250px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	margin-top: 10px;
+	/* right: -10px;
 	top: 20px;
 	position: absolute;
 	border-radius: 50%;
 	width: 50px;
 	height: 50px;
-	margin-top: 10px;
+	margin-top: 10px; */
 }
 
 .nweet__actions {
