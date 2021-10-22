@@ -87,10 +87,10 @@ form {
 /* Nwitter Factory */
 
 .factoryForm {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 100%;
 }
 
 .factoryInput__container {
@@ -169,7 +169,7 @@ form {
 
 .nweet {
 	margin-bottom: 20px;
-	background-color: white;
+	border: 1px solid lightgrey;
 	width: 100%;
 	max-width: 320px;
 	padding: 20px;

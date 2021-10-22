@@ -11,16 +11,36 @@ const App = () => {
 		AuthService.onAuthStateChanged((user) => {
 			if (user) {
 				setIsLogged(true)
-				setUserObj(user)
+				setUserObj({
+					displayName: user.displayName,
+					uid: user.uid,
+					updateProfile: (args) => user.updateProfile(args),
+				})
 			} else {
 				setIsLogged(false)
 			}
 			setInit(true)
 		})
 	}, [])
+	const refreshUser = () => {
+		const user = AuthService.currentUser
+		setUserObj({
+			displayName: user.displayName,
+			uid: user.uid,
+			updateProfile: (args) => user.updateProfile(args),
+		})
+	}
 	return (
 		<>
-			{init ? <AppRouter isLogged={isLogged} userObj={userObj} /> : "Initializing..."}
+			{init ? (
+				<AppRouter
+					refreshUser={refreshUser}
+					isLogged={Boolean(userObj)}
+					userObj={userObj}
+				/>
+			) : (
+				"Initializing..."
+			)}
 			<footer> &copy; {new Date().getFullYear()} Twitter</footer>
 		</>
 	)

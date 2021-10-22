@@ -18,7 +18,7 @@ const Home = ({ userObj }) => {
 	return (
 		<div className="container">
 			<SweetMaking userObj={userObj} />
-			<div>
+			<div style={{ marginTop: 30 }}>
 				{sweets.map((sweet) => (
 					<Sweet
 						key={sweet.id}

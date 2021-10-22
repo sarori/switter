@@ -31,45 +31,43 @@ const Sweet = ({ isOwner, sweetObj }) => {
 	}
 
 	return (
-		<>
-			<div className="nweet">
-				{editing ? (
-					<>
-						<form onSubmit={onSubmit} className="container nweetEdit">
-							<input
-								type="text"
-								value={newSweet}
-								required
-								autoFocus
-								onChange={onChange}
-								className="formInput"
-							/>
-						</form>
-						<span onClick={onSubmit} className="formBtn">
-							Update
-						</span>
-						<span onClick={toToggle} className="nweet__actions">
-							Cancle
-						</span>
-					</>
-				) : (
-					<>
-						<h4>{sweetObj.text}</h4>
-						{sweetObj.attachmentUrl && <img src={sweetObj.attachmentUrl} />}
-						{isOwner && (
-							<div className="nweet__actions">
-								<span onClick={toToggle}>
-									<FontAwesomeIcon icon={faPencilAlt} />
-								</span>
-								<span onClick={onDeleteClick}>
-									<FontAwesomeIcon icon={faTrash} />
-								</span>
-							</div>
-						)}
-					</>
-				)}
-			</div>
-		</>
+		<div className="nweet">
+			{editing ? (
+				<>
+					<form onSubmit={onSubmit} className="container nweetEdit">
+						<input
+							type="text"
+							value={newSweet}
+							required
+							autoFocus
+							onChange={onChange}
+							className="formInput"
+						/>
+					</form>
+					<span onClick={onSubmit} className="formBtn">
+						Update
+					</span>
+					<span onClick={toToggle} className="formBtn cancelBtn">
+						Cancle
+					</span>
+				</>
+			) : (
+				<>
+					<h4>{sweetObj.text}</h4>
+					{sweetObj.attachmentUrl && <img src={sweetObj.attachmentUrl} />}
+					{isOwner && (
+						<div className="nweet__actions">
+							<span onClick={toToggle}>
+								<FontAwesomeIcon icon={faPencilAlt} />
+							</span>
+							<span onClick={onDeleteClick}>
+								<FontAwesomeIcon icon={faTrash} />
+							</span>
+						</div>
+					)}
+				</>
+			)}
+		</div>
 	)
 }
 
