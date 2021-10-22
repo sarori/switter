@@ -32,7 +32,7 @@ const Sweet = ({ isOwner, sweetObj }) => {
 
 	return (
 		<>
-			<div>
+			<div className="nweet">
 				{editing ? (
 					<>
 						<form onSubmit={onSubmit} className="container nweetEdit">
@@ -48,14 +48,16 @@ const Sweet = ({ isOwner, sweetObj }) => {
 						<span onClick={onSubmit} className="formBtn">
 							Update
 						</span>
-						<span onClick={toToggle}>Cancle</span>
+						<span onClick={toToggle} className="nweet__actions">
+							Cancle
+						</span>
 					</>
 				) : (
 					<>
 						<h4>{sweetObj.text}</h4>
 						{sweetObj.attachmentUrl && <img src={sweetObj.attachmentUrl} />}
 						{isOwner && (
-							<div class="nweet__actions">
+							<div className="nweet__actions">
 								<span onClick={toToggle}>
 									<FontAwesomeIcon icon={faPencilAlt} />
 								</span>
